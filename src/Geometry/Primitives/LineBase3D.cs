@@ -3,6 +3,7 @@ using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace Geometry.Primitives;
 
+// Note:
 // In this library, a line / half line / segment is identified
 // by a fixed point on it and its direction.
 // We create a number axis to help realize the concept,
@@ -13,7 +14,7 @@ namespace Geometry.Primitives;
 /// Base class derived by <see cref="Line3D"/>, <see cref="HalfLine3D"/> and <see cref="Segment3D"/>.
 /// Presenting a line of part of a line in 3-dimensional space.
 /// </summary>
-public abstract class LineBase3D : ISamplable3D
+public abstract class LineBase3D : IPointSet<Point3D>
 {
     /// <summary>
     /// Fixed point on the <see cref="LineBase3D"/> object.
@@ -57,14 +58,7 @@ public abstract class LineBase3D : ISamplable3D
         Boundaries = boundaries;
     }
 
-    /// <summary>
-    /// Determine whether the object contains the point.
-    /// </summary>
-    /// <param name="point">The point to determine whether on the <see cref="LineBase3D"/> object.</param>
-    /// <returns>
-    /// True, if the object contains the point; <br/>
-    /// False, otherwise.
-    /// </returns>
+    /// <inheritdoc />
     public bool Contains(Point3D point)
     {
         var relativeVector = FixedPoint.VectorTo(point);
@@ -184,21 +178,10 @@ public abstract class LineBase3D : ISamplable3D
     public static bool operator ==(LineBase3D line1, LineBase3D line2) => line1.Equals(line2);
     public static bool operator !=(LineBase3D line1, LineBase3D line2) => !line1.Equals(line2);
 
-    /// <summary>
-    /// Sample points from the object.
-    /// </summary>
-    /// <param name="precision">Precision of the samples, which is the distance between 2 neighboring points.</param>
-    /// <returns>All point samples.</returns>
+    /// <inheritdoc />
     public abstract IEnumerable<Point3D> Sample(double precision);
 
-    /// <summary>
-    /// Determine whether current object is equivalent to another object.
-    /// </summary>
-    /// <param name="obj">Another object.</param>
-    /// <returns>
-    /// True, if the objects are equivalent (of the same type and semantically the same); <br/>
-    /// False, otherwise.
-    /// </returns>
+    /// <inheritdoc />
     public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
@@ -206,9 +189,9 @@ public abstract class LineBase3D : ISamplable3D
         return obj is LineBase3D other && Equals(other);
     }
 
+    /// <inheritdoc />
     /// <summary>
     /// Compute hash code by combining the hash codes of the fixed point, direction vector and type.
     /// </summary>
-    /// <returns>Hash code of the object.</returns>
     public override int GetHashCode() => HashCode.Combine(FixedPoint, Direction, GetType());
 }

@@ -1,5 +1,8 @@
 namespace Geometry;
 
+/// <summary>
+/// Constants involved in this library.
+/// </summary>
 public static class Constants
 {
     /// <summary>

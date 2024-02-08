@@ -29,22 +29,15 @@ public class HalfLine2D : LineBase2D
     /// </summary>
     public override Line2D CorrespondingLine => _correspondingLine ??= new(FixedPoint, Direction);
 
-    /// <summary>
-    /// Determine whether other <see cref="LineBase2D"/> object is equivalent to current object.
-    /// </summary>
-    /// <returns>
-    /// True, if the objects are equivalent; <br/>
-    /// False, otherwise.
-    /// </returns>
+    /// <inheritdoc />
     protected override bool Equals(LineBase2D other) =>
         other is HalfLine2D hl && Direction == hl.Direction && End == hl.End;
 
+    /// <inheritdoc />
     /// <summary>
-    /// Sample points from the half-line. <br/>
-    /// Note: Points are infinitive.
+    /// Sample points from the half-line.
     /// </summary>
-    /// <param name="precision">Precision of the sampling, which is the distance between neighboring points.</param>
-    /// <returns>All point samples.</returns>
+    /// <returns>All point samples on the half line.</returns>
     public override IEnumerable<Point2D> Sample(double precision)
     {
         double translation = 0d;

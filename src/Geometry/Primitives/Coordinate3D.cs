@@ -81,10 +81,7 @@ public abstract class Coordinate3D
     private bool Equals(Coordinate3D other) => X.IsApproximatelyEqualTo(other.X) && Y.IsApproximatelyEqualTo(other.Y) &&
                                                Z.IsApproximatelyEqualTo(other.Z);
 
-    /// <summary>
-    /// Validate value equality for current coordinate and another object.
-    /// </summary>
-    /// <param name="obj">Another object to be compared.</param>
+    /// <inheritdoc />
     /// <returns>
     /// True, if the other object is <br/> (1) of semantically equivalent type, or <br/>
     /// (2) is the same type as the current object and shares the same coordinates and is equal to this coordinate; <br/>
@@ -103,17 +100,17 @@ public abstract class Coordinate3D
         };
     }
 
+    /// <inheritdoc />
     /// <summary>
     /// Compute hash code by combining the hash codes of all coordinates.
     /// </summary>
-    /// <returns>Hash code of the coordinate.</returns>
     public override int GetHashCode() => HashCode.Combine(X, Y, Z);
 
+    /// <inheritdoc />
     /// <summary>
     /// Convert the coordinate to a string in the form below. <br/>
     /// (X, Y, Z)
     /// </summary>
-    /// <returns>String representing the coordinate.</returns>
     public override string ToString() => $"({X}, {Y}, {Z})";
 
 

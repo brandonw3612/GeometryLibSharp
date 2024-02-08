@@ -62,13 +62,7 @@ public class Line3D : LineBase3D
 
     #region relations
 
-    /// <summary>
-    /// Determine whether other <see cref="LineBase3D"/> object is equivalent to current object.
-    /// </summary>
-    /// <returns>
-    /// True, if the objects are equivalent; <br/>
-    /// False, otherwise.
-    /// </returns>
+    /// <inheritdoc />
     protected override bool Equals(LineBase3D other) => other is Line3D l && IsParallelTo(l) && Contains(l.FixedPoint);
 
     /// <summary>
@@ -111,12 +105,12 @@ public class Line3D : LineBase3D
 
     #endregion
     
+    /// <inheritdoc />
     /// <summary>
     /// Sample points from the line. <br/>
     /// Note: Points are infinitive.
     /// </summary>
-    /// <param name="precision">Precision of the sampling, which is the distance between neighboring points.</param>
-    /// <returns>All point samples.</returns>
+    /// <returns>All point samples from the line.</returns>
     public override IEnumerable<Point3D> Sample(double precision)
     {
         double translation = 0d;

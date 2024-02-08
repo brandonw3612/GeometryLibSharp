@@ -56,13 +56,7 @@ public class Line2D : LineBase2D
 
     #region relations
 
-    /// <summary>
-    /// Determine whether other <see cref="LineBase2D"/> object is equivalent to current object.
-    /// </summary>
-    /// <returns>
-    /// True, if the objects are equivalent; <br/>
-    /// False, otherwise.
-    /// </returns>
+    /// <inheritdoc />
     protected override bool Equals(LineBase2D other) => other is Line2D l && IsParallelTo(l) && Contains(l.FixedPoint);
 
     /// <summary>
@@ -105,12 +99,12 @@ public class Line2D : LineBase2D
 
     #endregion
     
+    /// <inheritdoc />
     /// <summary>
     /// Sample points from the line. <br/>
     /// Note: Points are infinitive.
     /// </summary>
-    /// <param name="precision">Precision of the sampling, which is the distance between neighboring points.</param>
-    /// <returns>All point samples.</returns>
+    /// <returns>All point samples from the line.</returns>
     public override IEnumerable<Point2D> Sample(double precision)
     {
         double translation = 0d;

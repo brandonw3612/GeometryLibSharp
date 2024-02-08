@@ -41,13 +41,7 @@ public class Segment3D : LineBase3D
     /// </summary>
     public override Line3D CorrespondingLine => _correspondingLine ??= new(FixedPoint, Direction);
 
-    /// <summary>
-    /// Determine whether other <see cref="LineBase3D"/> object is equivalent to current object.
-    /// </summary>
-    /// <returns>
-    /// True, if the objects are equivalent; <br/>
-    /// False, otherwise.
-    /// </returns>
+    /// <inheritdoc />
     protected override bool Equals(LineBase3D other)
     {
         if (other is not Segment3D segment) return false;
@@ -56,11 +50,11 @@ public class Segment3D : LineBase3D
         return false;
     }
     
+    /// <inheritdoc />
     /// <summary>
-    /// Sample points from the line.
+    /// Sample points from the segment.
     /// </summary>
-    /// <param name="precision">Precision of the sampling, which is the distance between neighboring points.Ï</param>
-    /// <returns>All point samples.</returns>
+    /// <returns>All point samples from the segment.</returns>
     public override IEnumerable<Point3D> Sample(double precision)
     {
         for (double translation = Boundaries.Start; translation <= Boundaries.End; translation += precision)

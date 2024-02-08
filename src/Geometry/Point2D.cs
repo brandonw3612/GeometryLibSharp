@@ -6,7 +6,7 @@ namespace Geometry;
 /// <summary>
 /// Point in 2-dimensional space.
 /// </summary>
-public class Point2D : Coordinate2D
+public class Point2D : Coordinate2D, IPoint
 {
     #region constants
 
@@ -21,39 +21,25 @@ public class Point2D : Coordinate2D
 
     #region constructors
     
-    /// <summary>
-    /// Construct from X and Y coordinates.
-    /// </summary>
-    /// <param name="x">The X coordinate.</param>
-    /// <param name="y">The Y coordinate.</param>
+    /// <inheritdoc />
     public Point2D(double x, double y) : base(x, y)
     {
         // Nothing else here.
     }
     
-    /// <summary>
-    /// Construct from a double tuple containing both coordinates.
-    /// </summary>
-    /// <param name="t">The coordinate double tuple.</param>
+    /// <inheritdoc />
     public Point2D((double X, double Y) t) : base(t)
     {
         // Nothing else here.
     }
     
-    /// <summary>
-    /// Construct from a <see cref="Vector2"/> object using its coordinates.
-    /// </summary>
-    /// <param name="v">The coordinate <see cref="Vector2"/> object.</param>
+    /// <inheritdoc />
     public Point2D(Vector2 v) : base(v)
     {
         // Nothing else here.
     }
     
-    /// <summary>
-    /// Construct from an array containing coordinates.
-    /// </summary>
-    /// <exception cref="ArgumentException">Thrown if the length of the array is not 2.</exception>
-    /// <param name="array">An array with exactly 2 elements, representing both coordinates.</param>
+    /// <inheritdoc />
     public Point2D(double[] array) : base(array)
     {
         // Nothing else here.

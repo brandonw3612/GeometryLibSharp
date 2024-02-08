@@ -6,7 +6,7 @@ namespace Geometry;
 /// <summary>
 /// Point in 3-dimensional space.
 /// </summary>
-public class Point3D : Coordinate3D
+public class Point3D : Coordinate3D, IPoint
 {
     #region constants
 
@@ -21,40 +21,25 @@ public class Point3D : Coordinate3D
 
     #region constructors
     
-    /// <summary>
-    /// Construct from X, Y and Z coordinates.
-    /// </summary>
-    /// <param name="x">The X coordinate.</param>
-    /// <param name="y">The Y coordinate.</param>
-    /// <param name="z">The Z coordinate.</param>
+    /// <inheritdoc />
     public Point3D(double x, double y, double z) : base(x, y, z)
     {
         // Nothing else here.
     }
     
-    /// <summary>
-    /// Construct from a double tuple containing all coordinates.
-    /// </summary>
-    /// <param name="t">The coordinate double tuple.</param>
+    /// <inheritdoc />
     public Point3D((double X, double Y, double Z) t) : base(t)
     {
         // Nothing else here.
     }
     
-    /// <summary>
-    /// Construct from a <see cref="Vector3"/> object using its coordinates.
-    /// </summary>
-    /// <param name="v">The coordinate <see cref="Vector3"/> object.</param>
+    /// <inheritdoc />
     public Point3D(Vector3 v) : base(v)
     {
         // Nothing else here.
     }
     
-    /// <summary>
-    /// Construct from an array containing coordinates.
-    /// </summary>
-    /// <exception cref="ArgumentException">Thrown if the length of the array is not 3.</exception>
-    /// <param name="array">An array with exactly 3 elements, representing both coordinates.</param>
+    /// <inheritdoc />
     public Point3D(double[] array) : base(array)
     {
         // Nothing else here.

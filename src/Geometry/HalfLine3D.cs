@@ -29,22 +29,16 @@ public class HalfLine3D : LineBase3D
     /// </summary>
     public override Line3D CorrespondingLine => _correspondingLine ??= new(FixedPoint, Direction);
 
-    /// <summary>
-    /// Determine whether other <see cref="LineBase3D"/> object is equivalent to current object.
-    /// </summary>
-    /// <returns>
-    /// True, if the objects are equivalent; <br/>
-    /// False, otherwise.
-    /// </returns>
+    /// <inheritdoc />
     protected override bool Equals(LineBase3D other) =>
         other is HalfLine3D hl && Direction == hl.Direction && End == hl.End;
     
+    /// <inheritdoc />
     /// <summary>
     /// Sample points from the half-line. <br/>
     /// Note: Points are infinitive.
     /// </summary>
-    /// <param name="precision">Precision of the sampling, which is the distance between neighboring points.</param>
-    /// <returns>All point samples.</returns>
+    /// <returns>All point samples on the half line.</returns>
     public override IEnumerable<Point3D> Sample(double precision)
     {
         double translation = 0d;
