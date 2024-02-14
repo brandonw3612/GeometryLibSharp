@@ -3,7 +3,7 @@ namespace Geometry.Extensions;
 /// <summary>
 /// Extension methods that simplify math calculations globally.
 /// </summary>
-internal static class MathExtensions
+public static class MathExtensions
 {
     /// <summary>
     /// Determine whether two real numbers can be approximately considered equal. <br/>

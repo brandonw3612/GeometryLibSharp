@@ -11,5 +11,5 @@ public static class Constants
     /// When Math.Abs(<b>x</b> - <b>y</b>) is less than <see cref="ApproximateEqualError"/>, we consider <b>x</b> and <b>y</b> as equal.
     /// </example>
     /// </summary>
-    public const double ApproximateEqualError = 1e-5d;
+    public static double ApproximateEqualError { get; set; } = 1e-5d;
 }
