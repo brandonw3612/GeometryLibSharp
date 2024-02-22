@@ -6,7 +6,7 @@
   <a href="https://github.com/brandonw3612/GeometryLibSharp/blob/main/LICENSE">
     <img alt="GitHub" src="https://img.shields.io/github/license/brandonw3612/GeometryLibSharp?label=License">
   </a>
-  <a href="https://www.nuget.org/packages/Pulse.NET">
+  <a href="https://www.nuget.org/packages/GeometryLibSharp">
     <img alt="NuGet (with prereleases)" src="https://img.shields.io/nuget/vpre/GeometryLibSharp?logo=nuget&label=NuGet%20Package&labelColor=004880">
   </a>
 </h1>
