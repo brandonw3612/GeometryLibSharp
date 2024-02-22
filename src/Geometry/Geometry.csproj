@@ -6,15 +6,39 @@
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <OutputPath>../../build/Geometry/</OutputPath>
-        <Product>GeometryLibSharp</Product>
-    </PropertyGroup>
-    
-    <PropertyGroup>
-        <Version>0.1.0</Version>
-        <Title>GeometryLibSharp</Title>
-        <Authors>Brandon Wong</Authors>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <PackageId>GeometryLibSharp</PackageId>
+        <Title>GeometryLibSharp</Title>
+        <Version>0.0.1-alpha</Version>
+        <Authors>Brandon Wong</Authors>
+        <Product>GeometryLibSharp</Product>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <PackageIcon>lib_icon.png</PackageIcon>
+        <PackageReadmeFile>README_NuGet.md</PackageReadmeFile>
+        <Description>
+            GeometryLibSharp is a .NET library providing geometric elements and operations, in both 2D and 3D spaces.
+        </Description>
+        <Copyright>Copyright (c) Brandon Wong 2024</Copyright>
+        <PackageProjectUrl>https://github.com/brandonw3612/GeometryLibSharp</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/brandonw3612/GeometryLibSharp</RepositoryUrl>
+        <PackageTags>math;geometry;2d;3d</PackageTags>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' OR '$(TargetFramework)' == 'net7.0' OR '$(TargetFramework)' == 'net8.0'">
+        <IsTrimmable>true</IsTrimmable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../../assets/lib_icon.png" Pack="true" PackagePath="/" />
+        <None Include="../../assets/README_NuGet.md" Pack="true" PackagePath="/" />
+    </ItemGroup>
+    
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
         <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
         <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
