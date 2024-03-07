@@ -11,7 +11,7 @@
     <PropertyGroup>
         <PackageId>GeometryLibSharp</PackageId>
         <Title>GeometryLibSharp</Title>
-        <Version>0.0.2-alpha</Version>
+        <Version>0.0.3-alpha</Version>
         <Authors>Brandon Wong</Authors>
         <Product>GeometryLibSharp</Product>
         <IncludeSymbols>true</IncludeSymbols>
