@@ -54,5 +54,5 @@ public class InfiniteCylinder : IPointSet<Point3D>
     /// Determine whether the infinite cylinder contains a point.
     /// </summary>
     /// <returns>True, if the infinite cylinder contains the point; False, otherwise.</returns>
-    public bool Contains(Point3D point) => point.DistanceTo(Axis).IsApproximatelyEqualTo(Radius);
+    public bool Contains(Point3D point) => Relations.DistanceBetween(point, Axis).IsApproximatelyEqualTo(Radius);
 }

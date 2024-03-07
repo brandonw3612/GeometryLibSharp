@@ -41,7 +41,7 @@ public class Line2D : LineBase2D
     /// </summary>
     /// <param name="p1">The first point on the line.</param>
     /// <param name="p2">The second point on the line.</param>
-    public Line2D(Point2D p1, Point2D p2) : base(p1, p1.VectorTo(p2),
+    public Line2D(Point2D p1, Point2D p2) : base(p1, Relations.VectorBetween(p1, p2),
         (double.NegativeInfinity, double.PositiveInfinity))
     {
         // Nothing else here.
@@ -54,50 +54,9 @@ public class Line2D : LineBase2D
     /// </summary>
     public override Line2D CorrespondingLine => this;
 
-    #region relations
-
     /// <inheritdoc />
-    protected override bool Equals(LineBase2D other) => other is Line2D l && IsParallelTo(l) && Contains(l.FixedPoint);
-
-    /// <summary>
-    /// Calculate distance to a point.
-    /// </summary>
-    /// <returns>Distance to the point.</returns>
-    public double DistanceTo(Point2D point)
-    {
-        // FixPoint -> f, point -> p, direction -> (d)
-        // Foot of the perpendicular -> q
-        // (fq) = +/- fq * d
-        // pq = fp * sin<(fp), (fq)> = sqrt( fp^2 - ( fp * cos<(fp), (fq)> )^2 )
-        //    = sqrt( (fp) * (fp) - ( fp * (fp) * (fq) / fp / fq )^2 )
-        //    = sqrt( (fp) * (fp) - ( +/- (fp) * (d) )^2 )
-        //    = sqrt( (fp) * (fp) - ( (fp) * (d) )^2 )
-        var fp = FixedPoint.VectorTo(point);
-        return Math.Sqrt(fp * fp - Math.Pow(Direction * fp, 2));
-    }
-
-    /// <summary>
-    /// Calculate distance to another line.
-    /// </summary>
-    /// <returns>
-    /// Distance, if the lines are parallel or equivalent; <br/>
-    /// Null, otherwise.
-    /// </returns>
-    public double? DistanceTo(Line2D other) => DistanceBetween(this, other);
-
-    /// <summary>
-    /// Calculate distance between 2 lines.
-    /// </summary>
-    /// <param name="l1">The first line.</param>
-    /// <param name="l2">The second line.</param>
-    /// <returns>
-    /// Distance, if the lines are parallel or equivalent; <br/>
-    /// Null, otherwise.
-    /// </returns>
-    public static double? DistanceBetween(Line2D l1, Line2D l2) =>
-        AreParallel(l1, l2) ? l1.DistanceTo(l2.FixedPoint) : null;
-
-    #endregion
+    protected override bool Equals(LineBase2D other) =>
+        other is Line2D l && Relations.AreParallel(this, l) && Contains(l.FixedPoint);
     
     /// <inheritdoc />
     /// <summary>

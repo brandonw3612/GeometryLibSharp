@@ -23,97 +23,12 @@ public class Vector3D : Coordinate3D
         ? throw new ArithmeticException("You cannot normalize a Zero vector.")
         : this / Length;
 
-    #region relations
-
-    /// <summary>
-    /// Determine whether 2 vectors are parallel.
-    /// </summary>
-    /// <param name="other">Another vector.</param>
-    /// <returns>
-    /// True, if the vectors are parallel; <br/>
-    /// False, otherwise.
-    /// </returns>
-    public bool IsParallelTo(Vector3D other) => AreParallel(this, other);
-
-    /// <summary>
-    /// Determine whether 2 vectors are parallel.
-    /// </summary>
-    /// <param name="v1">The first vector</param>
-    /// <param name="v2">The second vector.</param>
-    /// <returns>
-    /// True, if the vectors are parallel; <br/>
-    /// False, otherwise.
-    /// </returns>
-    /// v1 is parallel to v2 => v1 x v2 = (0)
-    public static bool AreParallel(Vector3D v1, Vector3D v2) => (v1 ^ v2) == Zero;
-
-    /// <summary>
-    /// Determine whether 2 vectors are perpendicular.
-    /// </summary>
-    /// <param name="other">Another vector.</param>
-    /// <returns>
-    /// True, if the vectors are perpendicular; <br/>
-    /// False, otherwise.
-    /// </returns>
-    public bool IsPerpendicularTo(Vector3D other) => ArePerpendicular(this, other);
-
-    /// <summary>
-    /// Determine whether 2 vectors are perpendicular.
-    /// </summary>
-    /// <param name="v1">The first vector</param>
-    /// <param name="v2">The second vector.</param>
-    /// <returns>
-    /// True, if the vectors are perpendicular; <br/>
-    /// False, otherwise.
-    /// </returns>
-    public static bool ArePerpendicular(Vector3D v1, Vector3D v2) => (v1 * v2).IsNearZero();
-
-    /// <summary>
-    /// Included angle of 2 vectors in radians.
-    /// </summary>
-    /// <param name="other">Another vector.</param>
-    /// <returns>Included angle of the vectors in radians.</returns>
-    public double IncludedAngleWith(Vector3D other) => IncludedAngleOf(this, other);
-
-    /// <summary>
-    /// Included angle of 2 vectors in radians.
-    /// </summary>
-    /// <param name="v1">The first vector</param>
-    /// <param name="v2">The second vector.</param>
-    /// <returns>Included angle of the vectors in radians.</returns>
-    public static double IncludedAngleOf(Vector3D v1, Vector3D v2)
-    {
-        if (v1 == Zero || v2 == Zero) return double.NaN;
-        return Math.Acos(v1 * v2 / v1.Length / v2.Length);
-    }
-
-    /// <summary>
-    /// Included angle of 2 vectors in degrees.
-    /// </summary>
-    /// <param name="other">Another vector.</param>
-    /// <returns>Included angle of the vectors in degrees.</returns>
-    public double IncludedAngleDegreeWith(Vector3D other) => IncludedAngleDegreeOf(this, other);
-
-    /// <summary>
-    /// Included angle of 2 vectors in degrees.
-    /// </summary>
-    /// <param name="v1">The first vector</param>
-    /// <param name="v2">The second vector.</param>
-    /// <returns>Included angle of the vectors in degrees.</returns>
-    public static double IncludedAngleDegreeOf(Vector3D v1, Vector3D v2)
-    {
-        if (v1 == Zero || v2 == Zero) return double.NaN;
-        return Math.Acos(v1 * v2 / v1.Length / v2.Length) / Math.PI * 180d;
-    }
-
     /// <summary>
     /// Sample a vector perpendicular to current vector.
     /// </summary>
     /// <returns>The perpendicular vector sample.</returns>
     public Vector3D SamplePerpendicularVector() => Z.IsNearZero() ? (0d, 0d, 1d) : (Z, Z, -X - Y);
-
-    #endregion
-
+    
     #region constants
 
     private static Vector3D? _zero;

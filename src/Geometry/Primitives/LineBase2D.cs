@@ -1,5 +1,4 @@
 using Geometry.Extensions;
-using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace Geometry.Primitives;
 
@@ -18,7 +17,7 @@ public abstract class LineBase2D : IPointSet<Point2D>
     /// <summary>
     /// Fixed point on the <see cref="LineBase2D"/> object.
     /// </summary>
-    protected readonly Point2D FixedPoint;
+    internal readonly Point2D FixedPoint;
     
     /// <summary>
     /// Direction vector of the <see cref="LineBase2D"/> object.
@@ -60,109 +59,13 @@ public abstract class LineBase2D : IPointSet<Point2D>
     /// <inheritdoc />
     public bool Contains(Point2D point)
     {
-        var relativeVector = FixedPoint.VectorTo(point);
+        var relativeVector = Relations.VectorBetween(FixedPoint, point);
         // The point is not even on the corresponding line.
-        if (!Direction.IsParallelTo(relativeVector)) return false;
+        if (!Relations.AreParallel(Direction, relativeVector)) return false;
         // Compute the coordinate od the point on the number axis.
         var x = relativeVector * Direction;
         return Boundaries.Start <= x && x <= Boundaries.End;
     }
-
-    /// <summary>
-    /// Determine whether current object is parallel to another <see cref="LineBase2D"/> object.
-    /// </summary>
-    /// <param name="other">Another <see cref="LineBase2D"/> object.</param>
-    /// <returns>
-    /// True, if the objects are parallel; <br/>
-    /// False, otherwise.
-    /// </returns>
-    public bool IsParallelTo(LineBase2D other) => AreParallel(this, other);
-
-    /// <summary>
-    /// Determine whether 2 <see cref="LineBase2D"/> objects are parallel. 
-    /// </summary>
-    /// <param name="l1">The first <see cref="LineBase2D"/> object.</param>
-    /// <param name="l2">The second <see cref="LineBase2D"/> object.</param>
-    /// <returns>
-    /// True, if the objects are parallel; <br/>
-    /// False, otherwise.
-    /// </returns>
-    public static bool AreParallel(LineBase2D l1, LineBase2D l2) => l1.Direction.IsParallelTo(l2.Direction);
-    
-    /// <summary>
-    /// Determine whether current object is perpendicular to another <see cref="LineBase2D"/> object.
-    /// </summary>
-    /// <param name="other">Another <see cref="LineBase2D"/> object.</param>
-    /// <returns>
-    /// True, if the objects are perpendicular; <br/>
-    /// False, otherwise.
-    /// </returns>
-    public bool IsPerpendicularTo(LineBase2D other) => ArePerpendicular(this, other);
-
-    /// <summary>
-    /// Determine whether 2 <see cref="LineBase2D"/> objects are perpendicular. 
-    /// </summary>
-    /// <param name="l1">The first <see cref="LineBase2D"/> object.</param>
-    /// <param name="l2">The second <see cref="LineBase2D"/> object.</param>
-    /// <returns>
-    /// True, if the objects are perpendicular; <br/>
-    /// False, otherwise.
-    /// </returns>
-    public static bool ArePerpendicular(LineBase2D l1, LineBase2D l2) => l1.Direction.IsPerpendicularTo(l2.Direction);
-
-    /// <summary>
-    /// Solve the intersection point of current object and another.
-    /// </summary>
-    /// <param name="other">Another <see cref="LineBase2D"/> object.</param>
-    /// <returns>
-    /// A point, if the objects intersect; <br/>
-    /// Null, if the objects are parallel or overlap.
-    /// </returns>
-    public Point2D? IntersectionPointWith(LineBase2D other) => IntersectionPointOf(this, other);
-    
-    /// <summary>
-    /// Solve the intersection point of 2 <see cref="LineBase2D"/> objects.
-    /// </summary>
-    /// <param name="l1">The first <see cref="LineBase2D"/> object.</param>
-    /// <param name="l2">The second <see cref="LineBase2D"/> object.</param>
-    /// <returns>
-    /// A point, if the objects intersect; <br/>
-    /// Null, if the objects are parallel or overlap.
-    /// </returns>
-    public static Point2D? IntersectionPointOf(LineBase2D l1, LineBase2D l2)
-    {
-        // Solve intersection point of l1: { P, (d1) } and l2: { Q, (d2) }.
-        // Solution: Assume the intersection point is R, then
-        // equation set { (PR) = x * (d1), (QR) = y * (d2) } is solvable.
-        // Therefore, (PQ) = (PR) - (QR) = x * (d1) - y * (d2).
-        var pq = l1.FixedPoint.VectorTo(l2.FixedPoint);
-        var result = Matrix.Build.DenseOfColumnArrays(l1.Direction, -1 * l2.Direction)
-            .Solve(Vector.Build.DenseOfArray(pq));
-        // Error solving the equation.
-        if (result is not {Count: 2}) return null;
-        // NaN -> Multiple solutions; +/-Infinity -> No solution
-        if (result.Any(static ri => ri is double.NaN or double.NegativeInfinity or double.PositiveInfinity))
-            return null;
-        var r = l1.FixedPoint.MoveBy(result[0] * l1.Direction);
-        // If R is not both on l1 and l2 then the objects do not intersect.
-        return l1.Contains(r) && l2.Contains(r) ? r : null;
-    }
-
-    /// <summary>
-    /// Solve included angle of current object and another one.
-    /// </summary>
-    /// <param name="other">Another <see cref="LineBase2D"/> object.</param>
-    /// <returns>The included angle of the objects.</returns>
-    public double IncludedAngleWith(LineBase2D other) => IncludedAngleOf(this, other);
-
-    /// <summary>
-    /// Solve included angle of 2 <see cref="LineBase2D"/> objects.
-    /// </summary>
-    /// <param name="l1">The first <see cref="LineBase2D"/> object.</param>
-    /// <param name="l2">The second <see cref="LineBase2D"/> object.</param>
-    /// <returns>The included angle of the objects.</returns>
-    public static double IncludedAngleOf(LineBase2D l1, LineBase2D l2) =>
-        Math.Acos(Math.Abs(l1.Direction * l2.Direction));
 
     /// <summary>
     /// Determine whether current object is equivalent to another.
@@ -174,7 +77,23 @@ public abstract class LineBase2D : IPointSet<Point2D>
     /// </returns>
     protected abstract bool Equals(LineBase2D other);
     
+    /// <inheritdoc cref="LineBase2D.Equals(LineBase2D)"/>
+    /// <summary>
+    /// Determine whether two <see cref="LineBase2D"/> object are equivalent.
+    /// </summary>
+    /// <param name="line1">One <see cref="LineBase2D"/> object.</param>
+    /// <param name="line2">The other <see cref="LineBase2D"/> object.</param>
     public static bool operator ==(LineBase2D line1, LineBase2D line2) => line1.Equals(line2);
+    
+    /// <summary>
+    /// Determine whether two <see cref="LineBase2D"/> object are not equivalent.
+    /// </summary>
+    /// <param name="line1">One <see cref="LineBase2D"/> object.</param>
+    /// <param name="line2">The other <see cref="LineBase2D"/> object.</param>
+    /// <returns>
+    /// False, if the objects are equivalent (of the same type and semantically the same); <br/>
+    /// True, otherwise.
+    /// </returns>
     public static bool operator !=(LineBase2D line1, LineBase2D line2) => !line1.Equals(line2);
 
     /// <inheritdoc />

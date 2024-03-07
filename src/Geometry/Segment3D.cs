@@ -12,7 +12,8 @@ public class Segment3D : LineBase3D
     /// </summary>
     /// <param name="start">Start of the segment.</param>
     /// <param name="end">End of the segment.</param>
-    public Segment3D(Point3D start, Point3D end) : base(start, start.VectorTo(end), (0, start.DistanceTo(end)))
+    public Segment3D(Point3D start, Point3D end) : base(start, Relations.VectorBetween(start, end),
+        (0, Relations.DistanceBetween(start, end)))
     {
         // Nothing else here.
     }

@@ -23,101 +23,11 @@ public class Vector2D : Coordinate2D
         ? throw new ArithmeticException("You cannot normalize a Zero vector.")
         : this / Length;
 
-    #region relations
-
-    /// <summary>
-    /// Determine whether 2 vectors are parallel.
-    /// </summary>
-    /// <param name="other">Another vector.</param>
-    /// <returns>
-    /// True, if the vectors are parallel; <br/>
-    /// False, otherwise.
-    /// </returns>
-    public bool IsParallelTo(Vector2D other) => AreParallel(this, other);
-
-    /// <summary>
-    /// Determine whether 2 vectors are parallel.
-    /// </summary>
-    /// <param name="v1">The first vector</param>
-    /// <param name="v2">The second vector.</param>
-    /// <returns>
-    /// True, if the vectors are parallel; <br/>
-    /// False, otherwise.
-    /// </returns>
-    // v1 = (x1, y1), v2 = (x2, y2)
-    // v1 and v2 are parallel <=>
-    //     1) v2 is not zero, v1 = k * v2, or
-    //     2) v2 is zero ( v2 = (0, 0) )
-    // That is to say, x1 = k * x2, y1 = k * y2, or x2 = y2 = 0.
-    // Therefore, x1 * y2 = k * x2 * y2 = x2 * y1, which fits both conditions.
-    public static bool AreParallel(Vector2D v1, Vector2D v2) => (v1.X * v2.Y).IsApproximatelyEqualTo(v1.Y * v2.X);
-
-    /// <summary>
-    /// Determine whether 2 vectors are perpendicular.
-    /// </summary>
-    /// <param name="other">Another vector.</param>
-    /// <returns>
-    /// True, if the vectors are perpendicular; <br/>
-    /// False, otherwise.
-    /// </returns>
-    public bool IsPerpendicularTo(Vector2D other) => ArePerpendicular(this, other);
-
-    /// <summary>
-    /// Determine whether 2 vectors are perpendicular.
-    /// </summary>
-    /// <param name="v1">The first vector</param>
-    /// <param name="v2">The second vector.</param>
-    /// <returns>
-    /// True, if the vectors are perpendicular; <br/>
-    /// False, otherwise.
-    /// </returns>
-    public static bool ArePerpendicular(Vector2D v1, Vector2D v2) => (v1 * v2).IsNearZero();
-
-    /// <summary>
-    /// Included angle of 2 vectors in radians.
-    /// </summary>
-    /// <param name="other">Another vector.</param>
-    /// <returns>Included angle of the vectors in radians.</returns>
-    public double IncludedAngleWith(Vector2D other) => IncludedAngleOf(this, other);
-
-    /// <summary>
-    /// Included angle of 2 vectors in radians.
-    /// </summary>
-    /// <param name="v1">The first vector</param>
-    /// <param name="v2">The second vector.</param>
-    /// <returns>Included angle of the vectors in radians.</returns>
-    public static double IncludedAngleOf(Vector2D v1, Vector2D v2)
-    {
-        if (v1 == Zero || v2 == Zero) return double.NaN;
-        return Math.Acos(v1 * v2 / v1.Length / v2.Length);
-    }
-
-    /// <summary>
-    /// Included angle of 2 vectors in degrees.
-    /// </summary>
-    /// <param name="other">Another vector.</param>
-    /// <returns>Included angle of the vectors in degrees.</returns>
-    public double IncludedAngleDegreeWith(Vector2D other) => IncludedAngleDegreeOf(this, other);
-
-    /// <summary>
-    /// Included angle of 2 vectors in degrees.
-    /// </summary>
-    /// <param name="v1">The first vector</param>
-    /// <param name="v2">The second vector.</param>
-    /// <returns>Included angle of the vectors in degrees.</returns>
-    public static double IncludedAngleDegreeOf(Vector2D v1, Vector2D v2)
-    {
-        if (v1 == Zero || v2 == Zero) return double.NaN;
-        return Math.Acos(v1 * v2 / v1.Length / v2.Length) / Math.PI * 180d;
-    }
-
     /// <summary>
     /// Sample a vector perpendicular to current vector.
     /// </summary>
     /// <returns>The perpendicular vector sample.</returns>
     public Vector2D SamplePerpendicularVector() => (Y, -X);
-    
-    #endregion
 
     #region constants
 
