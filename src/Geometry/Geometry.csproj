@@ -11,7 +11,7 @@
     <PropertyGroup>
         <PackageId>GeometryLibSharp</PackageId>
         <Title>GeometryLibSharp</Title>
-        <Version>0.0.1-alpha</Version>
+        <Version>0.0.2-alpha</Version>
         <Authors>Brandon Wong</Authors>
         <Product>GeometryLibSharp</Product>
         <IncludeSymbols>true</IncludeSymbols>
@@ -22,6 +22,10 @@
         <Description>
             GeometryLibSharp is a .NET library providing geometric elements and operations, in both 2D and 3D spaces.
         </Description>
+        <PackageReleaseNotes>
+            Breaking changes:
+            - Relational methods are now moved from the element classes to the new Extensions namespace. To use them, please refer to the `Geometry.Extensions` namespace.
+        </PackageReleaseNotes>
         <Copyright>Copyright (c) Brandon Wong 2024</Copyright>
         <PackageProjectUrl>https://github.com/brandonw3612/GeometryLibSharp</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
